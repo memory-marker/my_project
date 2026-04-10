@@ -1,0 +1,49 @@
+import sys
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton,
+                             QLabel, QLineEdit, QVBoxLayout)
+from PyQt5.QtCore import Qt
+
+class MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("project 1")
+        self.label1 = QLabel("Hello", self)
+        self.lineEdit = QLineEdit(self)
+        self.button1 = QPushButton("click me", self)
+        self.initUI()
+
+    def initUI(self):
+
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.label1)
+        vbox.addWidget(self.lineEdit)
+        vbox.addWidget(self.button1)
+        self.setLayout(vbox)
+        self.label1.setAlignment(Qt.AlignCenter)
+
+        self.button1.clicked.connect(self.display_label)
+
+        self.setStyleSheet(""" 
+                QLabel {
+                    font-size: 20px;
+                    font-weight: bold;
+                    font-style: italic;
+                    font-family: sans-serif;
+                    color: red}
+                QPushButton {
+                    font-size: 30px;
+                    font-weight: bold;
+                    font-style: clibri;
+                    font-family: sans-serif;}""")
+
+    def display_label(self):
+        self.label1.setText("You clicked me!\n Now tell me your name.")
+
+def main():
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()
