@@ -1,0 +1,56 @@
+import sys
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (QApplication, QWidget, QLabel,
+                             QVBoxLayout, QPushButton, QLineEdit)
+
+class NewsApp(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("project")
+        self.label1 = QLabel("Hello", self)
+        self.button1 = QPushButton("submit", self)
+        self.LineEdit1 = QLineEdit(self)
+        self.initUI()
+    def initUI(self):
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.label1)
+        vbox.addWidget(self.LineEdit1)
+        vbox.addWidget(self.button1)
+        self.setLayout(vbox)
+        self.setStyleSheet("""
+                    QLabel{
+                        font-size: 30px;
+                        font-family: Arial;
+                        border-radius: 5px;
+                        color: black;}
+                    QPushButton{
+                        font-size: 40px;
+                        font-family: clibri;
+                        color: black;}
+                    QLineEdit{
+                        font-size: 20px;
+                        font-family: Arial;
+                        color: black}""")
+
+        self.label1.setAlignment(Qt.AlignCenter)
+
+        self.button1.clicked.connect(self.button_clicked)
+
+    def button_clicked(self):
+        if self.LineEdit1.text() == "":
+            self.label1.setText("Enter something")
+            self.label1.setStyleSheet("color: red;")
+        elif self.LineEdit1.text() != "":
+            self.label1.setText(f"hello {self.LineEdit1.text()}")
+            self.label1.setStyleSheet("color: blue;")
+        else:
+            self.label1.setText("Error")
+
+def main():
+    app = QApplication(sys.argv)
+    window = NewsApp()
+    window.show()
+    sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()
