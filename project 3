@@ -1,0 +1,165 @@
+import sys
+from PyQt5.QtWidgets import (QApplication, QWidget, QVBoxLayout, QPushButton,
+                             QRadioButton, QButtonGroup, QLabel)
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
+
+class project3(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Project 3")
+        self.setWindowIcon(QIcon("chip.jpg"))
+        self.label1 = QLabel("hello", self)
+        self.label2 = QLabel("____________",self)
+        self.check1 = QRadioButton("# 1. Food", self)
+        self.check2 = QRadioButton("# 2. Video game", self)
+        self.check3 = QRadioButton("# 3. movies", self)
+        self.check4 = QRadioButton("# 4. Hobby", self)
+        self.check5 = QRadioButton("# 5. Chores", self)
+
+        self.check6 = QRadioButton("# 6 language", self)
+        self.check7 = QRadioButton("# 7 math", self)
+        self.check8 = QRadioButton("# 8 chemistry", self)
+        self.check9 = QRadioButton("# 9 math", self)
+        self.check10 = QRadioButton("# 10 physis", self)
+
+        self.button1 = QPushButton("continue", self)
+
+        self.group1 = QButtonGroup(self)
+        self.group1.addButton(self.check1)
+        self.group1.addButton(self.check2)
+        self.group1.addButton(self.check3)
+        self.group1.addButton(self.check4)
+        self.group1.addButton(self.check5)
+
+        self.group2 = QButtonGroup(self)
+        self.group2.addButton(self.check6)
+        self.group2.addButton(self.check7)
+        self.group2.addButton(self.check8)
+        self.group2.addButton(self.check9)
+        self.group2.addButton(self.check10)
+
+        self.check6.hide()
+        self.check7.hide()
+        self.check8.hide()
+        self.check9.hide()
+        self.check10.hide()
+
+
+        self.initUI()
+
+
+    def initUI(self):
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.label1)
+        vbox.addWidget(self.label2)
+        vbox.addWidget(self.check1)
+        vbox.addWidget(self.check2)
+        vbox.addWidget(self.check3)
+        vbox.addWidget(self.check4)
+        vbox.addWidget(self.check5)
+        vbox.addWidget(self.check6)
+        vbox.addWidget(self.check7)
+        vbox.addWidget(self.check8)
+        vbox.addWidget(self.check9)
+        vbox.addWidget(self.check10)
+        vbox.addWidget(self.button1)
+        self.setLayout(vbox)
+        self.label1.setAlignment(Qt.AlignCenter)
+        self.label2.setAlignment(Qt.AlignCenter)
+
+        self.setStyleSheet("""
+            QLabel{
+                font-size: 35px;}
+            QPushButton{
+                font-size: 40px}
+            QRadioButton{
+                font-size: 45px}""")
+
+        self.button1.clicked.connect(self.is_clicked)
+
+        self.check1.toggled.connect(self.is_checked)
+        self.check2.toggled.connect(self.is_checked)
+        self.check3.toggled.connect(self.is_checked)
+        self.check4.toggled.connect(self.is_checked)
+        self.check5.toggled.connect(self.is_checked)
+        self.check6.toggled.connect(self.is_checked)
+        self.check7.toggled.connect(self.is_checked)
+        self.check8.toggled.connect(self.is_checked)
+        self.check9.toggled.connect(self.is_checked)
+        self.check10.toggled.connect(self.is_checked)
+
+
+    def is_clicked(self):
+
+        self.check1.hide()
+        self.check2.hide()
+        self.check3.hide()
+        self.check4.hide()
+        self.check5.hide()
+
+        self.check6.show()
+        self.check7.show()
+        self.check8.show()
+        self.check9.show()
+        self.check10.show()
+
+        self.button1.setText("back")
+        self.button1.clicked.connect(self.return_)
+
+    def return_(self):
+
+
+        self.check1.show()
+        self.check2.show()
+        self.check3.show()
+        self.check4.show()
+        self.check5.show()
+
+        self.check6.hide()
+        self.check7.hide()
+        self.check8.hide()
+        self.check9.hide()
+        self.check10.hide()
+
+        self.button1.setText("continue")
+        self.button1.clicked.connect(self.is_clicked)
+
+
+
+
+    def is_checked(self):
+        receive = self.sender()
+        if receive.isChecked():
+            if receive.text() == "# 1. Food":
+                self.label1.setText("what your favorite food?")
+            elif receive.text() == "# 2. Video game":
+                self.label1.setText("enjoy your game")
+            elif receive.text() == "# 3. movies":
+                self.label1.setText("relaxing with soda and popcorn")
+            elif receive.text() == "# 4. Hobby":
+                self.label1.setText("chase your dream")
+            elif receive.text() == "# 5. Chores":
+                self.label1.setText("your mom's gonna be happpy")
+            elif receive.text() == "# 6. language":
+                self.label1.setText(f"you done {receive.text()}.\n good job")
+            elif receive.text() == "# 7. bio":
+                self.label1.setText(f"you done {receive.text()}.\n good job")
+            elif receive.text() == "# 8. chemistry":
+                self.label1.setText(f"you done {receive.text()}.\n good job")
+            elif receive.text() == "# 9. math":
+                self.label1.setText(f"you done {receive.text()}.\n good job")
+            elif receive.text() == "# 10. physis":
+                self.label1.setText(f"you done {receive.text()}.\n good job")
+            else:
+                print("try again")
+
+
+def main():
+    app = QApplication(sys.argv)
+    body = project3()
+    body.show()
+    sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()
