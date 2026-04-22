@@ -1,0 +1,61 @@
+import sys
+import pygame
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QVBoxLayout
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
+
+class MyWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        pygame.mixer.init()
+        self.setWindowTitle("project 4")
+        self.setWindowIcon(QIcon("chip.jpg"))
+        self.label1 = QLabel("music", self)
+        self.button1 = QPushButton("Beautiful_Boy_Lyrics.mp3", self)
+        self.initUI()
+
+    def initUI(self):
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.label1)
+        vbox.addWidget(self.button1)
+        self.label1.setAlignment(Qt.AlignCenter)
+        self.setLayout(vbox)
+
+        self.setStyleSheet("""
+            QWidget {
+                font-size: 20px;
+                font-weight: bold;
+                font-family: sans-serif;
+                color: black;}
+                """)
+        self.button1.clicked.connect(self.is_clicked)
+
+    def is_clicked(self):
+        self.button1.disconnect()
+        self.button1.setText("stop")
+        try:
+            pygame.mixer.music.load("Beautiful_Boy__lyrics.mp3")
+            pygame.mixer.music.play()
+            self.label1.setText("The audio is now playing........")
+        except pygame.error as e:
+            print(f"Could not play file: {e}")
+
+        self.button1.clicked.connect(self.stop)
+
+    def stop(self):
+        pygame.mixer.music.stop()
+        self.button1.disconnect()
+        self.label1.setText("stopped")
+        self.button1.setText("play again")
+        self.button1.clicked.connect(self.is_clicked)
+
+
+def main():
+    app = QApplication(sys.argv)
+    window = MyWindow()
+    window.show()
+    sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()
+
